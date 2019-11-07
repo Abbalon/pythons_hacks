@@ -25,12 +25,19 @@ def scan(ip):
     broadcast = scapy.Ether(dst="ff:ff:ff:ff:ff:ff")
     arp_request_broadcast = broadcast/arp
     print(arp_request_broadcast.summary()) # Imprime un resumen del resultado
-    respondido, irrespondido = scapy.srp(arp_request_broadcast, timeout=2)
-    print(respondido.summary())
+    respondido = scapy.srp(arp_request_broadcast, timeout=2, verbose=False)[0] # Seleccionamos solo el primer elemento de la lista
+
+    print("IP\t\t\tMAC")
+    print("_________________________________________")
+    for response in respondido:
+        print(response[1].psrc + "\t\t" + response[1].hwsrc)
 
 
 # Buscamos nuestra ip local, y mandamos un mensaje broadcast
 # Se puede sustituir por
+if iface is None:
+    iface = "enx34298f9221b9"
+
 ifconfig_result = subprocess.check_output(["ifconfig", iface])
 
 # Expresiones regulares
