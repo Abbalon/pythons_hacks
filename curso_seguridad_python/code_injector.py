@@ -10,7 +10,7 @@ import scapy.all as scapy
 import re
 
 
-ack_list = []
+ack_list = 
 ptr_ = "Accept-Encoding:.*?\\r\\n"
 
 def set_load(packet, action):
